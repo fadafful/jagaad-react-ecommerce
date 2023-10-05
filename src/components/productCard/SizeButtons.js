@@ -2,6 +2,12 @@ import React from "react";
 import { useProduct } from "../../context/ProductContext";
 import styled from "styled-components";
 
+const Container = styled.div`
+  display: flex;
+  gap: 3%;
+  margin-bottom: 0.8rem;
+`;
+
 const Button = styled.button`
   width: 30px;
   height: 30px;
@@ -27,9 +33,12 @@ const SizeButtons = ({ productId }) => {
 
   return (
     <div>
-      {selectedProduct.sizes.map((size) => (
-        <Button key={size}>{size} </Button>
-      ))}
+      <p className="selected-product-size-text">Size</p>
+      <Container>
+        {selectedProduct.sizes.map((size) => (
+          <Button key={size}>{size} </Button>
+        ))}
+      </Container>
     </div>
   );
 };

@@ -5,13 +5,22 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
 
   a {
     text-decoration: none;
     color: #000;
+  }
+
+  media only screen and (min-width: 1200px) and (max-width: 1920px) {
+    Container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 
