@@ -2,6 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { useProduct } from "../../context/ProductContext";
 
+const Container = styled.div`
+  display: flex;
+  gap: 3%;
+  margin-bottom: 0.8rem;
+`;
+
 const Button = styled.button`
   width: 30px;
   height: 30px;
@@ -27,11 +33,14 @@ const ColorButtons = ({ productId }) => {
   }
 
   return (
-    <div>
-      {selectedProduct.colors.map((color, index) => (
-        <Button key={`${color}-${index}`} backgroundcolor={color} />
-      ))}
-    </div>
+    <>
+      <p className="selected-product-color-text">Color</p>
+      <Container>
+        {selectedProduct.colors.map((color, index) => (
+          <Button key={`${color}-${index}`} backgroundcolor={color} />
+        ))}
+      </Container>
+    </>
   );
 };
 
