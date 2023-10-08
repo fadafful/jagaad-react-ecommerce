@@ -5,7 +5,7 @@ import { useProduct } from "../../context/ProductContext";
 const Container = styled.div`
   display: flex;
   gap: 3%;
-  margin-bottom: 0.8rem;
+  margin-bottom: 5%;
 `;
 
 const Button = styled.button`

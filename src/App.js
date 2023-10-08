@@ -1,16 +1,10 @@
 // App.js
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useAuth } from "./hooks/UseAuth";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Nav from "./components/nav/Nav";
-import Hero from "./components/hero/Hero";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import About from "./pages/About";
@@ -25,7 +19,7 @@ function App() {
       <Router>
         <div>
           <Nav />
-          <Hero />
+
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route
