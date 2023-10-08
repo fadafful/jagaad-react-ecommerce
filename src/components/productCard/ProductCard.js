@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useProduct } from "../../context/ProductContext";
 import { Link } from "react-router-dom";
@@ -92,10 +93,25 @@ const ImageContainer = styled.div`
 
 const ProductCard = () => {
   const { id } = useParams();
-  const productData = useProduct(); // Access product using the custom hook
-
-  // Find the product with the specified ID
+  const productData = useProduct();
   const product = productData.find((p) => p.id === parseInt(id));
+
+  const [userRating, setUserRating] = useState(0);
+
+  // Load user's previous rating from local storage on component mount
+  useEffect(() => {
+    const storedRating = localStorage.getItem(`product_rating_${id}`);
+    if (storedRating) {
+      setUserRating(parseInt(storedRating));
+    }
+  }, [id]);
+
+  // Function to handle user rating click
+  const handleRatingClick = (rating) => {
+    // Store the user's rating in local storage
+    localStorage.setItem(`product_rating_${id}`, rating.toString());
+    setUserRating(rating);
+  };
 
   if (!product) {
     return <div>Product not found</div>;
@@ -132,13 +148,19 @@ const ProductCard = () => {
           <h3 className="product-price">${product.price}</h3>
           <div className="product-rating">
             {/* Render the star ratings here */}
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
+            {Array.from({ length: 5 }).map((_, index) => (
+              <AiFillStar
+                key={index}
+                onClick={() => handleRatingClick(index + 1)}
+                style={{
+                  color: index < userRating ? "#FFD700" : "#9f9f9f",
+                  cursor: "pointer",
+                }}
+              />
+            ))}
 
             <span className="product-description-stars-text">
-              | 5 Customer Reviews
+              | {userRating} Customer Reviews
             </span>
           </div>
           <p className="product-description-text">{product.description}</p>
