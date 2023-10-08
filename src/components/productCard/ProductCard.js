@@ -153,7 +153,7 @@ const ProductCard = () => {
                 key={index}
                 onClick={() => handleRatingClick(index + 1)}
                 style={{
-                  color: index < userRating ? "#FFD700" : "#9f9f9f",
+                  color: index < userRating ? "#FFD700" : "#000000",
                   cursor: "pointer",
                 }}
               />
