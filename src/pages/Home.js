@@ -1,8 +1,10 @@
 import Footer from "../components/footer/Footer";
+import Hero from "../components/hero/Hero";
 
 const Home = () => {
   return (
     <>
+      <Hero />
       <div className="info">
         <div className="info__item">
           <h2>Free Delivery</h2>

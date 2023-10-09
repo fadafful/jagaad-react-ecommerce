@@ -43,6 +43,10 @@ export const ProductProvider = ({ children }) => {
       sku: "SS001",
       category: "Sofas",
       tags: ["sofa", "furniture", "living room"],
+      style: {
+        // Add the styling object for Product 1 here
+        transform: "translateY(30px)",
+      }
     },
     {
       id: 2,
@@ -116,6 +120,10 @@ export const ProductProvider = ({ children }) => {
       sku: "SS001",
       category: "Sofas",
       tags: ["sofa", "furniture", "living room"],
+      style: {
+        // Add the styling object for Product 1 here
+        transform: "translateY(30px)",
+      }
     },
     {
       id: 8,
@@ -149,6 +157,10 @@ export const ProductProvider = ({ children }) => {
       description: "Description for Product 2",
       colors: ["red", "black", "blue"],
       sizes: ["S", "M", "L", "XL"],
+      style: {
+        // Add the styling object for Product 1 here
+        transform: "translateY(30px)",
+      }
     },
     {
       id: 11,
@@ -185,6 +197,10 @@ export const ProductProvider = ({ children }) => {
       sku: "SS001",
       category: "Sofas",
       tags: ["sofa", "furniture", "living room"],
+      style: {
+        // Add the styling object for Product 1 here
+        transform: "translateY(30px)",
+      }
     },
     {
       id: 14,
