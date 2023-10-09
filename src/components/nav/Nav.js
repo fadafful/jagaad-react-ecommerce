@@ -68,7 +68,7 @@ const Nav = () => {
       </ul>
       <ul className="icon-list">
         <li>
-          <img src={ICON1} alt="ICON1" />
+          <Link to="/dashboard"><img src={ICON1} alt="ICON1" /></Link>
         </li>
         <li>
           <img src={ICON2} alt="ICON2" />

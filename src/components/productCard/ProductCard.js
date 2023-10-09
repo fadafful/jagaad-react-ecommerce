@@ -147,7 +147,7 @@ const ProductCard = () => {
       <Breadcumb>
         <nav className="product-breadcrumb">
           <Link to="/">Home</Link> {">"}
-          <Link to="/shop">Shop</Link> {">"} | <p>{product.name}</p>
+          <Link to="/shop">Shop</Link> {">"} &nbsp; | <p>{product.name}</p>
         </nav>
       </Breadcumb>
 
