@@ -1,18 +1,12 @@
-import { useAuth } from "../hooks/UseAuth";
+import { useAuth } from "../context/authContext";
 
 export default function Dashboard() {
-  const [isAuthenticated] = useAuth();
-
-  const handleLogout = () => {
-    localStorage.removeItem("jwt");
-    window.location = "/";
-  };
+  const { signout } = useAuth();
 
   return (
-    isAuthenticated && (
-      <>
-        Welcome to Dashboard! <button onClick={handleLogout}>Log out</button>
-      </>
-    )
+    <>
+      <h1>Welcome to Dashboard!</h1>
+      <button onClick={() => signout()}>Log out</button>
+    </>
   );
 }

@@ -11,38 +11,42 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ProductCard from "./components/productCard/ProductCard";
 import PrivateRoute from "./components/PrivateRoute";
+import AuthProvider from "./context/authContext";
 import { ProductProvider } from "./context/ProductContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   const [isAuthenticated] = useAuth();
   return (
-    <ProductProvider>
-      <Router>
-        <div>
-          <Nav />
+    <AuthProvider>
+      <ProductProvider>
+        <Router>
+          <div>
+            <Nav />
 
-          <Routes>
-            <Route path="/" exact element={<Home />} />
-            <Route
-              path="/login"
-              exact
-              element={isAuthenticated ? <Dashboard /> : <Login />}
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/product/:id" element={<ProductCard />} />{" "}
-          </Routes>
-        </div>
-      </Router>
-    </ProductProvider>
+            <Routes>
+              <Route path="/" exact element={<Home />} />
+              <Route
+                path="/login"
+                exact
+                element={isAuthenticated ? <Dashboard /> : <Login />}
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/product/:id" element={<ProductCard />} />{" "}
+            </Routes>
+          </div>
+        </Router>
+      </ProductProvider>
+    </AuthProvider>
   );
 }
 export default App;

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 const Container = styled.section`
   display: flex;
@@ -66,45 +68,48 @@ const Container = styled.section`
 `;
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState(null);
+  const [formState, setFormState] = useState({
+    email: "",
+    password: ""
+  });
+  const { authenticate, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const res = {
-        data: { jwt: "asdasdfdasfadf", refreshToken: "adfasdfasdfasdfadsf" },
-      }; //await axios.post("/auth/login", { username, password });
-
-      const { jwt, refreshToken } = res.data;
-      localStorage.setItem("jwt", jwt);
-      localStorage.setItem("refreshToken", refreshToken);
-      window.location = "/dashboard";
-    } catch (err) {
-      setError("Incorrect username or password");
-    }
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    authenticate(formState);
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated]);
 
   return (
     <>
       <Container>
         <div className="login">
           <h2>Log In</h2>
-          <form onSubmit={handleSubmit}>
-            {error && <p className="error">{error}</p>}
+          {!isAuthenticated && (
+            <form onSubmit={handleFormSubmit}>
             <label>Username or email address</label>
             <input
+              onChange={(e) =>
+                setFormState({ ...formState, email: e.target.value })
+              }
               type="text"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
+              value={formState.email}
+              required
             />
             <label>Password</label>
             <input
+              onChange={(e) =>
+                setFormState({ ...formState, password: e.target.value })
+              }
               type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              value={formState.password}
+              required
             />
             <div className="form-btn">
               <button className="form-btn-login" type="submit">
@@ -113,6 +118,7 @@ const Login = () => {
               <Link to="/">Lost Your Password</Link>
             </div>
           </form>
+          )}
         </div>
         <div className="register">
           <h2>Register</h2>
@@ -120,8 +126,7 @@ const Login = () => {
             <label>Email address</label>
             <input
               type="text"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              required
             />
             <p>
               A link to set a new password will be sent to your email address.
