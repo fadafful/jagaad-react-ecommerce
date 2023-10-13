@@ -10,6 +10,9 @@ import { AiFillTwitterCircle } from "react-icons/ai";
 import SizeButtons from "./SizeButtons";
 import ColorButtons from "./ColorButtons";
 
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/slices/cartSlices";
+
 const Breadcumb = styled.div`
   nav {
     display: flex;
@@ -134,6 +137,19 @@ const ImageContainer = styled.div`
 const ProductCard = () => {
   const { id } = useParams();
   const productData = useProduct(); // Access product using the custom hook
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    if (!product) {
+      // Prevent adding the product if it's not found
+      return;
+    }
+
+    // Create an object with product information to add to the cart
+
+    // Dispatch the addToCart action with the product object
+    dispatch(addToCart(product));
+  };
 
   // Find the product with the specified ID
   const product = productData.find((p) => p.id === parseInt(id));
@@ -194,7 +210,9 @@ const ProductCard = () => {
           {/* Add to Cart Button */}
           <div className="product-add-btn">
             <button className="product-add-product"> - 1 + </button>
-            <button className="product-add-to-cart">Add to Cart</button>
+            <button className="product-add-to-cart" onClick={handleAddToCart}>
+              Add to Cart
+            </button>
           </div>
           {/* Product Details */}
           <div className="product-card-info">
