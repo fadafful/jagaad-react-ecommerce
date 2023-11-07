@@ -4,39 +4,25 @@ import { fetchProducts } from "../thunks/productsThunk";
 const productsSlice = createSlice({
   name: "products",
   initialState: {
+    items: [],
     loading: false,
-    items: []
+    error: null,
   },
-  reducers: {
-    addToCart(state, action) {
-      state.items.push({
-        id: action.payload.id,
-        images: action.payload.image,
-        name: action.payload.name,
-        price: action.payload.price,
-        description: action.payload.description,
-      });
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.items.push(...action.payload);
-      state.loading = false;
-    });
-
-    builder.addCase(fetchProducts.rejected, (state, action) => {
-      state.item = [];
-      state.loading = false;
-    });
-
-    builder.addCase(fetchProducts.pending, (state, action) => {
-      state.loading = true;
-    });
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = 'loading';
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        state.products = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.error.message;
+      });
   }
 });
-
-export const { addToCart } = todosSlice.actions;
-export const productsSelector = (state) => state.products.items;
-export const loadingSelector = (state) => state.products.loading;
 
 export default productsSlice.reducer;

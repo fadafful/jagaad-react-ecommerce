@@ -11,11 +11,11 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ProductCard from "./components/productCard/ProductCard";
 import PrivateRoute from "./components/PrivateRoute";
-import { ProductProvider } from "./context/ProductContext";
+import { Provider } from 'react-redux';
 function App() {
   const [isAuthenticated] = useAuth();
   return (
-    <ProductProvider>
+    <Provider store={store}>
       <Router>
         <div>
           <Nav />
@@ -42,7 +42,7 @@ function App() {
           </Routes>
         </div>
       </Router>
-    </ProductProvider>
+    </Provider>
   );
 }
 export default App;
