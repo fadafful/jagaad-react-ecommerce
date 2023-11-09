@@ -1,11 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts } from "../thunks/productsThunk";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
+  const response = await fetch("https://my-json-server.typicode.com/fadafful/jsonplaceholder/db");
+  const products = await response.json();
+  console.log(products);
+  return products;
+});
 
 const productsSlice = createSlice({
   name: "products",
   initialState: {
-    items: [],
-    loading: false,
+    products: [],
+    loading: 'idle',
     error: null,
   },
   reducers: {},
@@ -24,5 +30,8 @@ const productsSlice = createSlice({
       });
   }
 });
+
+//export const productsSelector = (state) => state.products.items;
+//export const loadingSelector = (state) => state.products.loading;
 
 export default productsSlice.reducer;

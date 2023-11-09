@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import ProductCard from "./components/productCard/ProductCard";
 import PrivateRoute from "./components/PrivateRoute";
 import { Provider } from 'react-redux';
+import store from "./redux/store";
 function App() {
   const [isAuthenticated] = useAuth();
   return (

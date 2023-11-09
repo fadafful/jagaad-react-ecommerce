@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useProduct } from "../../context/ProductContext";
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts } from '../../redux/slices/productsSlice';
 import styled from "styled-components";
 import Hero from "../hero/Hero";
 
@@ -37,21 +39,35 @@ const Container = styled.div`
 `;
 
 const Product = () => {
-  const product = useProduct(); // Access product using the custom hook
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
+  const loading = useSelector((state) => state.products.loading);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  if (loading === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (loading === 'failed') {
+    return <div>Error loading products</div>;
+  }
 
   return (
     <>
       <Hero />
       <Container>
-        {product.map((product) => (
-          <Link to={`/product/${product.id}`} key={product.id}>
-            <div className="product">
-              <img src={product.images[4]} alt={product.name} style={product.style} />
-              <p className="product-name">{product.name}</p>
-              <p className="product-price">RS. {product.price}</p>
-            </div>
-          </Link>
-        ))}
+      {products.map((product) => (
+        <Link to={`/product/${product.id}`} key={product.id}>
+          <div className="product">
+            <img src={product.images[4]} alt={product.name} style={product.style} />
+            <p className="product-name">{product.name}</p>
+            <p className="product-price">RS. {product.price}</p>
+          </div>
+        </Link>
+      ))}
       </Container>
     </>
   );
