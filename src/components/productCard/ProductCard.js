@@ -11,7 +11,7 @@ import SizeButtons from "./SizeButtons";
 import ColorButtons from "./ColorButtons";
 
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/slices/cartSlices";
+import { addToCartAsync } from "../../redux/actions";
 
 const Breadcumb = styled.div`
   nav {
@@ -152,22 +152,17 @@ const ImageContainer = styled.div`
 
 const ProductCard = () => {
   const { id } = useParams();
-  const productData = useProduct(); // Access product using the custom hook
+  const productData = useProduct();
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
     if (!product) {
-      // Prevent adding the product if it's not found
       return;
     }
 
-    // Create an object with product information to add to the cart
-
-    // Dispatch the addToCart action with the product object
-    dispatch(addToCart(product));
+    dispatch(addToCartAsync(product));
   };
 
-  // Find the product with the specified ID
   const product = productData.find((p) => p.id === parseInt(id));
 
   if (!product) {
