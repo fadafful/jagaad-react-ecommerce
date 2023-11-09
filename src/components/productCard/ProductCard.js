@@ -132,6 +132,22 @@ const ImageContainer = styled.div`
     justify-content: center;
     align-items: center;
   }
+
+  img {
+    width: 76px;
+    height: 80px;
+    border-radius: 10px;
+    background: #FFF9E5;
+  }
+
+  .product-image:last-child img {
+    width: 423px;
+    height: 500px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #FFF9E5;
+  }
+
 `;
 
 const ProductCard = () => {
