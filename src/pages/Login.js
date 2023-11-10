@@ -9,6 +9,11 @@ const Container = styled.section`
   flex-direction: column;
   width: 100vw;
 
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+
   form input {
     padding: 1rem;
     border-radius: 10px;
