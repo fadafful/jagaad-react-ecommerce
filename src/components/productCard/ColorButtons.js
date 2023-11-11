@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
-import { useProduct } from "../../context/ProductContext";
 
 const Container = styled.div`
   display: flex;
@@ -17,31 +17,37 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const ColorButtons = ({ productId }) => {
-  const product = useProduct();
+const ColorButtons = ({ productId, products }) => {
+  const product = products.find((p) => p.id === productId);
+  const availableColors = product.colors || [];
 
-  // Find the selected product based on productId
-  const selectedProduct = product.find((p) => p.id === productId);
+  const [selectedColor, setSelectedColor] = useState("");
 
-  if (!selectedProduct) {
-    return <div>Product not found</div>; // Handle the case when the product is not found
-  }
-
-  // Check if the selected product has colors
-  if (!selectedProduct.colors || selectedProduct.colors.length === 0) {
-    return <div>No available colors for this product</div>;
-  }
+  const handleColorClick = (color) => {
+    setSelectedColor(color);
+  };
 
   return (
-    <>
-      <p className="selected-product-color-text">Color</p>
+    <div>
+      <p className="selected-product-color-text">Color: {selectedColor}</p>
       <Container>
-        {selectedProduct.colors.map((color, index) => (
-          <Button key={`${color}-${index}`} backgroundcolor={color} />
+        {availableColors.map((color, index) => (
+          <Button
+            key={index}
+            color={color}
+            onClick={() => handleColorClick(color)}
+            backgroundcolor={color}
+          />
         ))}
       </Container>
-    </>
+    </div>
   );
 };
 
-export default ColorButtons;
+const mapStateToProps = (state) => {
+  return {
+    products: state.products.products,
+  };
+};
+
+export default connect(mapStateToProps)(ColorButtons);

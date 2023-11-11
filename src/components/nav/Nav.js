@@ -68,7 +68,9 @@ const Nav = () => {
       </ul>
       <ul className="icon-list">
         <li>
-          <Link to="/dashboard"><img src={ICON1} alt="ICON1" /></Link>
+          <Link to="/dashboard">
+            <img src={ICON1} alt="ICON1" />
+          </Link>
         </li>
         <li>
           <img src={ICON2} alt="ICON2" />
@@ -77,7 +79,9 @@ const Nav = () => {
           <img src={ICON3} alt="ICON3" />
         </li>
         <li>
-          <img src={ICON4} alt="ICON4" />
+          <Link to="/cart">
+            <img src={ICON4} alt="ICON4" />
+          </Link>
         </li>
       </ul>
     </NavBar>

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useProduct } from "../../context/ProductContext";
+
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AiFillStar } from "react-icons/ai";
@@ -9,6 +9,10 @@ import { AiFillTwitterCircle } from "react-icons/ai";
 
 import SizeButtons from "./SizeButtons";
 import ColorButtons from "./ColorButtons";
+
+import { connect, useDispatch } from "react-redux";
+
+import { addToCart } from "../../redux/slices/cartSlice";
 
 const Breadcumb = styled.div`
   nav {
@@ -171,16 +175,22 @@ const ImageContainer = styled.div`
 
 `;
 
-const ProductCard = () => {
-  const { id } = useParams();
-  const productData = useProduct(); // Access product using the custom hook
+const ProductCard = ({ products }) => {
+  const { id } = useParams(); // Use React Router to get the product ID
+  const dispatch = useDispatch();
+  console.log(useParams());
 
   // Find the product with the specified ID
-  const product = productData.find((p) => p.id === parseInt(id));
+  const product = products.find((p) => p.id === parseInt(id));
 
   if (!product) {
     return <div>Product not found</div>;
   }
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+    console.log(product);
+  };
 
   return (
     <div className="product-card">
@@ -236,8 +246,10 @@ const ProductCard = () => {
 
           {/* Add to Cart Button */}
           <div className="product-add-btn">
-            <button className="product-add-btn-quantity"> - 1 + </button>
-            <button className="product-add-btn-to-cart">Add to Cart</button>
+            <button className="product-add-product"> - 1 + </button>
+            <button className="product-add-to-cart" onClick={handleAddToCart}>
+              Add to Cart
+            </button>
           </div>
           {/* Product Details */}
           <ul className="product-card-info">
@@ -266,4 +278,11 @@ const ProductCard = () => {
   );
 };
 
-export default ProductCard;
+const mapStateToProps = (state) => {
+  return {
+    products: state.products.products,
+    cart: state.cart.cart,
+  };
+};
+
+export default connect(mapStateToProps)(ProductCard);
