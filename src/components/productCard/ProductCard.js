@@ -206,9 +206,6 @@ const ProductCard = () => {
               <img
                 src={image}
                 alt={`${index + 1}`}
-                style={{
-                  width: index === 4 ? "423px" : "100%", // Adjust the width
-                }}
               />
             </div>
           ))}
