@@ -1,18 +1,18 @@
-import { useAuth } from "../hooks/UseAuth";
+import { useAuth } from "../context/authContext";
+import { testRequest } from "../services/authServices";
 
 export default function Dashboard() {
-  const [isAuthenticated] = useAuth();
+  const { signout } = useAuth();
 
-  const handleLogout = () => {
-    localStorage.removeItem("jwt");
-    window.location = "/";
+  const handleTestRequest = async () => {
+    await testRequest();
   };
 
   return (
-    isAuthenticated && (
-      <>
-        Welcome to Dashboard! <button onClick={handleLogout}>Log out</button>
-      </>
-    )
+    <>
+      <h1>Welcome to Dashboard!</h1>
+      <button onClick={handleTestRequest}>Test Request</button>
+      <button onClick={() => signout()}>Log out</button>
+    </>
   );
 }
