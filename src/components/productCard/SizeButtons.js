@@ -1,5 +1,5 @@
-import React from "react";
-import { useProduct } from "../../context/ProductContext";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -21,26 +21,38 @@ const Button = styled.button`
     border: 1px solid rgba(251, 235, 181, 1);
   `;
 
-const SizeButtons = ({ productId }) => {
-  const product = useProduct();
+const SizeButtons = ({ productId, products }) => {
+  const product = products.find((p) => p.id === productId);
+  const availableSizes = product.sizes || [];
+  console.log(availableSizes);
 
-  // Find the selected product based on productId
-  const selectedProduct = product.find((p) => p.id === productId);
+  const [selectedSize, setSelectedSize] = useState(availableSizes[0] || "");
 
-  if (!selectedProduct) {
-    return null; // Handle the case when the product is not found
-  }
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
+  };
 
   return (
     <div>
-      <p className="selected-product-size-text">Size</p>
+      <p className="selected-product-size-text">Size: {selectedSize}</p>
       <Container>
-        {selectedProduct.sizes.map((size) => (
-          <Button key={size}>{size} </Button>
+        {availableSizes.map((size, index) => (
+          <Button
+            key={index}
+            size={size}
+            selected={selectedSize === size}
+            onClick={() => handleSizeClick(size)}
+          >
+            {size}
+          </Button>
         ))}
       </Container>
     </div>
   );
 };
 
-export default SizeButtons;
+const mapStateToProps = (state) => ({
+  products: state.products.products,
+});
+
+export default connect(mapStateToProps)(SizeButtons);

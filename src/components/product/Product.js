@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useProduct } from "../../context/ProductContext";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import Hero from "../hero/Hero";
 
@@ -27,7 +27,7 @@ const Container = styled.div`
     font-weight: 600;
   }
 
-  @media only screen and (min-width: 1200px) and (max-width: 1920px) {
+  @media (min-width: 992px) {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -36,17 +36,19 @@ const Container = styled.div`
   }
 `;
 
-const Product = () => {
-  const product = useProduct(); // Access product using the custom hook
-
+const Product = ({ products }) => {
   return (
     <>
       <Hero />
       <Container>
-        {product.map((product) => (
+        {products.map((product) => (
           <Link to={`/product/${product.id}`} key={product.id}>
             <div className="product">
-              <img src={product.images[4]} alt={product.name} style={product.style} />
+              <img
+                src={product.images[4]}
+                alt={product.name}
+                style={product.style}
+              />
               <p className="product-name">{product.name}</p>
               <p className="product-price">RS. {product.price}</p>
             </div>
@@ -57,4 +59,10 @@ const Product = () => {
   );
 };
 
-export default Product;
+const mapStateToProps = (state) => {
+  return {
+    products: state.products.products,
+  };
+};
+
+export default connect(mapStateToProps)(Product);
