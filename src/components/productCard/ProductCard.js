@@ -14,7 +14,7 @@ const Breadcumb = styled.div`
   nav {
     display: flex;
     gap: 1rem;
-    margin: 4% 0;
+    margin: 2% 2%;
     align-items: center;
   }
 
@@ -23,6 +23,12 @@ const Breadcumb = styled.div`
     color: #000;
     font-size: 0.8rem;
     font-weight: 400;
+  }
+
+  @media (min-width: 758px) {
+    nav {
+      margin: 4% 5%;
+    }
   }
 `;
 
@@ -39,13 +45,26 @@ const Container = styled.section`
     margin-top: 0;
   }
 
-  h3 {
+  .product-description-price {
     font-size: 1.5rem;
     font-weight: 400;
     color: #9f9f9f;
+    margin-bottom: 3%;
   }
 
-  .product-description-stars-text {
+  .product-description-rating {
+    display: flex;
+    gap: 1%;
+    align-items: center;
+    margin-bottom: 3%;
+  }
+
+  .product-description-rating-star {
+    color: rgba(255, 218, 91, 1);
+  }
+
+  .product-description-rating-text {
+    margin-left: 3%;
     color: rgba(159, 159, 159, 1);
     font-size: 0.8rem;
     font-weight: 400;
@@ -54,7 +73,7 @@ const Container = styled.section`
   .product-description-text {
     font-size: 0.8rem;
     font-weight: 400;
-    line-height: 1rem;
+    line-height: normal;
   }
 
   .selected-product-color-text {
@@ -70,6 +89,9 @@ const Container = styled.section`
     color: rgba(159, 159, 159, 1);
     border-top: 1px solid rgba(159, 159, 159, 0.2);
     padding-top: 4%;
+    list-style: none;
+    padding-left: 0;
+    line-height: 2rem;
   }
 
   .product-add-btn {
@@ -80,18 +102,20 @@ const Container = styled.section`
 
   .product-add-btn button {
     border-radius: 10px;
-    border: 1px solid #000;
-    padding: 0.5rem 1.5rem;
+    border: 1px solid #9f9f9f;
+    padding: 1rem 1.5rem;
     background-color: #fff;
+    cursor: pointer;
   }
 
   .product-share-icons span {
     display: inline-flex;
-    gap: 5%;
+    gap: 10%;
     color: black;
     width: 50%;
+    margin-left: 3%;
   }
-  @media only screen and (min-width: 1200px) and (max-width: 1920px) {
+  @media (min-width: 758px) {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -129,6 +153,22 @@ const ImageContainer = styled.div`
     justify-content: center;
     align-items: center;
   }
+
+  img {
+    width: 76px;
+    height: 80px;
+    border-radius: 10px;
+    background: #FFF9E5;
+  }
+
+  .product-image:last-child img {
+    width: 423px;
+    height: 500px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #FFF9E5;
+  }
+
 `;
 
 const ProductCard = ({products}) => {
@@ -148,7 +188,7 @@ const ProductCard = ({products}) => {
       <Breadcumb>
         <nav className="product-breadcrumb">
           <Link to="/">Home</Link> {">"}
-          <Link to="/shop">Shop</Link> {">"} &nbsp; | <p>{product.name}</p>
+          <Link to="/shop">Shop</Link> {">"} | <p>{product.name}</p>
         </nav>
       </Breadcumb>
 
@@ -164,7 +204,10 @@ const ProductCard = ({products}) => {
                 gridRow: index === 4 ? "1 / span 4" : `auto`,
               }}
             >
-              <img src={image} alt={`${index + 1}`} />
+              <img
+                src={image}
+                alt={`${index + 1}`}
+              />
             </div>
           ))}
         </ImageContainer>
@@ -172,15 +215,15 @@ const ProductCard = ({products}) => {
         {/* Product Description */}
         <div className="product-description">
           <h1 className="production-description-name">{product.name}</h1>
-          <h3 className="product-price">${product.price}</h3>
-          <div className="product-rating">
+          <h3 className="product-description-price">${product.price}</h3>
+          <div className="product-description-rating">
             {/* Render the star ratings here */}
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
+            <AiFillStar className="product-description-rating-star" />
+            <AiFillStar className="product-description-rating-star" />
+            <AiFillStar className="product-description-rating-star" />
+            <AiFillStar className="product-description-rating-star" />
 
-            <span className="product-description-stars-text">
+            <span className="product-description-rating-text">
               | 5 Customer Reviews
             </span>
           </div>
@@ -194,30 +237,30 @@ const ProductCard = ({products}) => {
 
           {/* Add to Cart Button */}
           <div className="product-add-btn">
-            <button className="product-add-product"> - 1 + </button>
-            <button className="product-add-to-cart">Add to Cart</button>
+            <button className="product-add-btn-quantity"> - 1 + </button>
+            <button className="product-add-btn-to-cart">Add to Cart</button>
           </div>
           {/* Product Details */}
-          <div className="product-card-info">
-            <p>SKU: {product.sku}</p>
-            <p>Category: {product.category}</p>
-            <p>
+          <ul className="product-card-info">
+            <li>SKU: {product.sku}</li>
+            <li>Category: {product.category}</li>
+            <li>
               Tags: {Array.isArray(product.tags) ? product.tags.join(", ") : ""}
-            </p>
+            </li>
 
             {/* Share Icons */}
             <div className="product-share-icons">
               {/* Include social media sharing icons here */}
-              <p>
+              <li>
                 Share:
                 <span>
                   <FaFacebook />
                   <FaLinkedin />
                   <AiFillTwitterCircle />
                 </span>
-              </p>
+              </li>
             </div>
-          </div>
+          </ul>
         </div>
       </Container>
     </div>

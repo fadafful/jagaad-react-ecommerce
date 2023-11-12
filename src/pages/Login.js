@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Info from "../components/Info";
+import Footer from "../components/footer/Footer";
 
 const Container = styled.section`
   display: flex;
   flex-direction: column;
   width: 100vw;
+
+  a {
+    text-decoration: none;
+    color: #000;
+  }
 
   form input {
     padding: 1rem;
@@ -17,7 +24,7 @@ const Container = styled.section`
     border-radius: 15px;
     border: 1px solid #000;
     padding: 17px 78px;
-    background-color: white;
+
     cursor: pointer;
   }
 
@@ -137,6 +144,8 @@ const Login = () => {
           </form>
         </div>
       </Container>
+      <Info />
+      <Footer />
     </>
   );
 };
