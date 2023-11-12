@@ -31,7 +31,7 @@ const productsSlice = createSlice({
   }
 });
 
-//export const productsSelector = (state) => state.products.items;
-//export const loadingSelector = (state) => state.products.loading;
+export const productsSelector = (state) => state.products.products;
+export const loadingSelector = (state) => state.products.loading;
 
 export default productsSlice.reducer;

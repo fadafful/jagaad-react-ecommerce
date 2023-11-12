@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useProduct } from "../../context/ProductContext";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useSelector } from 'react-redux';
 import { AiFillStar } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
@@ -131,16 +131,17 @@ const ImageContainer = styled.div`
   }
 `;
 
-const ProductCard = () => {
+const ProductCard = ({products}) => {
+  console.log('Products Array:', products);
+
   const { id } = useParams();
-  const productData = useProduct(); // Access product using the custom hook
 
-  // Find the product with the specified ID
-  const product = productData.find((p) => p.id === parseInt(id));
-
-  if (!product) {
-    return <div>Product not found</div>;
+  if (!products) {
+    return <div>Loading...</div>;
   }
+
+  const productId = parseInt(id);
+  const product = products.find((p) => p.id === productId);
 
   return (
     <div className="product-card">
